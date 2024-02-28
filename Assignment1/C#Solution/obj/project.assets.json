@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/sirenmelkevig/repos/DAT600/DAT600Espen-Siren/Assignment1/C#Solution/DAT600.csproj",
+      "projectUniqueName": "/Users/sirenmelkevig/DAT600Assignments/DAT600Espen-Siren/Assignment1/C#Solution/DAT600.csproj",
       "projectName": "DAT600",
-      "projectPath": "/Users/sirenmelkevig/repos/DAT600/DAT600Espen-Siren/Assignment1/C#Solution/DAT600.csproj",
+      "projectPath": "/Users/sirenmelkevig/DAT600Assignments/DAT600Espen-Siren/Assignment1/C#Solution/DAT600.csproj",
       "packagesPath": "/Users/sirenmelkevig/.nuget/packages/",
-      "outputPath": "/Users/sirenmelkevig/repos/DAT600/DAT600Espen-Siren/Assignment1/C#Solution/obj/",
+      "outputPath": "/Users/sirenmelkevig/DAT600Assignments/DAT600Espen-Siren/Assignment1/C#Solution/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/sirenmelkevig/.nuget/NuGet/NuGet.Config"
