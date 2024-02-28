@@ -1,5 +1,9 @@
 import time
 import random
+
+def generate_random_currency_system_list(count, upper_limit):
+    return [random.randint(1, upper_limit) for _ in range(count)]
+
 #Task 3.1
 def gready_coin(N, coins):
     coins.sort(reverse=True)
