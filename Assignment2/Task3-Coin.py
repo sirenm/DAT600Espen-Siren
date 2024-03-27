@@ -1,9 +1,4 @@
 import time
-import random
-
-def generate_random_currency_system_list(count, upper_limit):
-    return [random.randint(1, upper_limit) for _ in range(count)]
-
 #Task 3.1
 def gready_coin(N, coins):
     coins.sort(reverse=True)
@@ -15,36 +10,35 @@ def gready_coin(N, coins):
             count = N // coin
             total_coins += count
             total_amount += count
-            for i in range(total_coins):
+            for _ in range(total_coins):
                 result.append(coin)
             N -= count * coin
         total_coins = 0
     return f"Coins: {result}, total of {total_amount}"
 
-coins = [1, 5, 11]
-
 start_time = time.time()
+coins = [1, 5, 11]
 print(gready_coin(15, coins))
 end_time = time.time()
 execution_time = (end_time - start_time) * 1000
-print(f"Total runtime for first function: {execution_time} ms")
+print(execution_time)
 
  #Task 3.2 
-def optimize_gready_coin(N,coins):
+def optimize_coin(N,coins):
     coins.sort(reverse=True)
     results = [float("inf")] * (N+1)
     results[0] = 0
-    coinsss = {}
     
     for i in range(1, N+1):
         for coin in coins:
             if coin <= i:
                 q = min(results[i], results[i - coin]+1)
-                coinsss[q] = str(coin)
-                print(coinsss)
                 results[i] = q
     return results[N]
 
+start_time = time.time()
 coins = [1,5,11]
-print("VÅR")
-print(optimize_gready_coin(15, coins))
+print(optimize_coin(15, coins))
+end_time = time.time()
+execution_time = (end_time - start_time) * 1000
+print(execution_time)
