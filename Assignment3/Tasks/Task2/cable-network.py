@@ -38,8 +38,9 @@ mst_weight = mst.size(weight='weight')
 
 # print(mst_weight)
 
-
-def prims_algorithm(graph, start_vertex):
+#Task 2a
+def prims_algorithm(graph):
+    start_vertex = list(graph.keys())[0]
     min_spanning_tree = []
     total_cost = 0
     visited = set()
@@ -49,9 +50,11 @@ def prims_algorithm(graph, start_vertex):
     for to_vertex, cost in graph[start_vertex].items():
         possible_edges.append((cost, start_vertex, to_vertex))
 
+    #Sorted nondecreasing order of edges
     heapq.heapify(possible_edges)
 
     while possible_edges:
+        #While possible edges (e), extract minimal cost e, from_vertex, to_vertex
         cost, from_vertex, to_vertex = heapq.heappop(possible_edges)
 
         if to_vertex not in visited:
@@ -66,9 +69,10 @@ def prims_algorithm(graph, start_vertex):
     return min_spanning_tree, total_cost
 
 
-# print(prims_algorithm(graphtouse, start_vertex=0))
-
-def prims_algorithm_edge_constraint(graph, start_vertex, max_edges):
+# print(prims_algorithm(graphtouse))
+#Task 2b
+def prims_algorithm_edge_constraint(graph, max_edges):
+    start_vertex = list(graph.keys())[0]
     min_spanning_tree = []
     total_cost = 0
     visited = set()
@@ -84,32 +88,72 @@ def prims_algorithm_edge_constraint(graph, start_vertex, max_edges):
 
     heapq.heapify(possible_edges)
 
-
     while possible_edges:
-        print(possible_edges)
         cost, from_vertex, to_vertex = heapq.heappop(possible_edges)
-        print(cost, from_vertex, to_vertex)
 
-        if to_vertex not in visited and edge_count[from_vertex] < max_edges:
+        vertex_not_visited = to_vertex not in visited
+        under_edge_count = edge_count[from_vertex] < max_edges
+
+        if vertex_not_visited and under_edge_count:
             visited.add(to_vertex)
             total_cost += cost
-
             min_spanning_tree.append((from_vertex, to_vertex, cost))
-
             edge_count[from_vertex] += 1
             edge_count[to_vertex] += 1
 
-
             for next_vertex, next_cost in graph[to_vertex].items():
+                vertex_not_visited = next_vertex not in visited
+                under_edge_count = edge_count[next_vertex] < max_edges
 
-                if next_vertex not in visited and edge_count[next_vertex] < max_edges:
+                if vertex_not_visited and under_edge_count:
                     heapq.heappush(possible_edges, (next_cost, to_vertex, next_vertex))
-
 
     return min_spanning_tree, total_cost
 
-# for key, items in graphtouse.items():
-#     print(key, items)
+mst_with_constraint = prims_algorithm_edge_constraint(graphtouse, max_edges=3)
+# print(mst_with_constraint)
 
-mst_with_constraint = prims_algorithm_edge_constraint(graphtouse, start_vertex=0, max_edges=3)
-print(mst_with_constraint)
+#Task 2c
+def prims_algorithm_edge_swap(graph, max_edges):
+    start_vertex = list(graph.keys())[0]
+    min_spanning_tree = []
+    total_cost = 0
+    visited = set([start_vertex])
+
+    edge_count = {vertex: 0 for vertex in graph}
+    possible_edges = [(cost, start_vertex, to_vertex) for to_vertex, cost in graph[start_vertex].items()]
+    heapq.heapify(possible_edges)
+
+    max_edge_in_mst = (0, None, None)
+    edges_not_in_mst = []
+
+    while possible_edges:
+        cost, from_vertex, to_vertex = heapq.heappop(possible_edges)
+        if to_vertex not in visited and edge_count[from_vertex] < max_edges:
+            visited.add(to_vertex)
+            total_cost += cost
+            min_spanning_tree.append((cost, from_vertex, to_vertex))
+            edge_count[from_vertex] += 1
+            edge_count[to_vertex] += 1
+
+            if cost > max_edge_in_mst[0]:
+                max_edge_in_mst = (cost, from_vertex, to_vertex)
+
+            for next_vertex, next_cost in graph[to_vertex].items():
+                if next_vertex not in visited and edge_count[next_vertex] < max_edges:
+                    heapq.heappush(possible_edges, (next_cost, to_vertex, next_vertex))
+        else:
+            edges_not_in_mst.append((cost, from_vertex, to_vertex))
+
+    min_edge_not_in_mst = min(edges_not_in_mst)
+
+    if min_edge_not_in_mst[0] < max_edge_in_mst[0]:
+        min_spanning_tree.remove((max_edge_in_mst[0], max_edge_in_mst[1], max_edge_in_mst[2]))
+        min_spanning_tree.append(min_edge_not_in_mst)
+        total_cost = total_cost - max_edge_in_mst[0] + min_edge_not_in_mst[0]
+
+    return min_spanning_tree, total_cost
+
+
+mst_with_cost = prims_algorithm_edge_swap(graphtouse, 3)
+print(mst_with_cost)
