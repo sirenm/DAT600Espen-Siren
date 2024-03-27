@@ -40,15 +40,14 @@ def topology_sort(graph):
         if not visited[node]:
             dfs(node)
 
-    # Sort the nodes by decreasing finish times
+    #Sort node on timings
     sorted_nodes = sorted(graph, key=lambda node: finish_time[node])
     
     for node in sorted_nodes:
         ordering[i] = node
         i -= 1
-
+    #return ordered nodes
     return ordering
 
-# Example usage:
 ordering = topology_sort(graph_from_figure_1)
 print(ordering)
