@@ -11,18 +11,6 @@ graph_from_figure_1_with_additional_edges = {
     'J': ['I']
 }
 
-graph_from_figure_1_with_additional_edges_before = {
-    'A': ['B'],
-    'B': ['C', 'D'],
-    'C': ['A','E', 'F'],
-    'D': ['E', 'F'],
-    'E': ['F', 'G', 'J'],
-    'F': ['B', 'G', 'H', 'J'],
-    'G': [],
-    'H': ['I'],
-    'I': ['C'],
-    'J': ['I']
-}
 visited = {node: False for node in graph_from_figure_1_with_additional_edges}
 start_time = {node: None for node in graph_from_figure_1_with_additional_edges}
 finish_time = {node: None for node in graph_from_figure_1_with_additional_edges}
@@ -49,8 +37,7 @@ def remove_edges(graph):
     for node in graph:
         if not visited[node]:
             dfs(node, graph, edges_to_remove)
-
-    # Removing the edges that are part of cycles
+            
     for node, neighbour in edges_to_remove:
         print(f"Removed edge {node} -> {neighbour}")
         graph[node].remove(neighbour)
