@@ -31,5 +31,6 @@ prob += x >= 10
 
 answer = prob.solve()
 
-print(value(x))
-print(value(y))
+print("Value for X: " + str(value(x)))
+print("Value for Y: " + str(value(y)))
+

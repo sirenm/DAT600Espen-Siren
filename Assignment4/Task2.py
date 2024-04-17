@@ -22,10 +22,6 @@ edges = [
 for u, v, capacity in edges:
     G.add_edge(u, v, capacity=capacity)
 
-# Calculate maximum flow
-flow_value, flow_dict = nx.maximum_flow(G, 's', 't')
-print("Maximum Flow Value:", flow_value)
-
 # Calculate minimum cut
 min_cut_value, (reachable, non_reachable) = nx.minimum_cut(G, 's', 't')
 
@@ -33,4 +29,8 @@ bottleneck_edges = []
 for u, v, d in G.edges(data=True):
     if u in reachable and v in non_reachable:
         bottleneck_edges.append((u, v))
-print(bottleneck_edges)
+print("Bottleneck edges: " + str(bottleneck_edges))
+
+# Calculate maximum flow
+flow_value, flow_dict = nx.maximum_flow(G, 's', 't')
+print("Maximum Flow Value:", flow_value)
